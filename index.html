@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>生蚝の应援图库</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --primary:#B8A4C6;/*蓝金色主色*/
+  --bg:#0e101b;
+  --cardbg:#181a2b;
+}
+body{background:var(--bg);padding:16px;color:#fff;font-family:system-ui;}
+h1{text-align:center;color:var(--primary);margin-bottom:24px;font-weight:500;}
+
+/* 布局：桌面 2列；平板2列；手机1列 */
+.masonry{
+  column-count:2;
+  column-gap:14px;
+  max-width:1000px;
+  margin:0 auto;
+}
+.item{
+  break-inside:avoid;
+  margin-bottom:14px;
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--cardbg);
+  cursor:pointer;
+}
+.item img{
+  width:100%;
+  display:block;
+}
+
+/*灯箱弹窗 点击放大*/
+.lightbox{
+  position:fixed;inset:0;background:rgba(0,0,0,0.88);
+  display:none;align-items:center;justify-content:center;z-index:999;
+  padding:20px;
+}
+.lightbox img{max-width:95%;max-height:95vh;border-radius:6px;}
+.lightbox.show{display:flex;}
+
+/*手机端变成1列 */
+@media(max-width:600px){
+  .masonry{column-count:1;}
+}
+</style>
+</head>
+<body>
+<h1>生蚝の应援图库</h1>
+<div class="masonry" id="gallery"></div>
+
+<!--灯箱弹窗层-->
+<div class="lightbox" id="lb" onclick="closeLb()">
+  <img id="lbimg">
+</div>
+
+<script>
+// 全部图片链接已录入
+const photoList = [
+  {src:"https://s41.ax1x.com/2026/08/01/pm4yEL9.jpg"},
+  {src:"https://s41.ax1x.com/2026/08/01/pm4yAsJ.jpg"},
+  {src:"https://s41.ax1x.com/2026/08/01/pm4ykM4.jpg"},
+  {src:"https://s41.ax1x.com/2026/08/01/pm4yizF.jpg"},
+  {src:"https://s41.ax1x.com/2026/08/01/pm4yPRU.jpg"},
+  {src:"https://s41.ax1x.com/2026/08/01/pm4yCGT.jpg"},
+  {src:"https://s41.ax1x.com/2026/08/01/pm4y9iV.jpg"},
+  {src:"https://s41.ax1x.com/2026/08/01/pm4ySI0.jpg"}
+];
+
+const gal = document.getElementById('gallery');
+photoList.forEach(p=>{
+  const div = document.createElement('div');
+  div.className='item';
+  div.innerHTML = `<img src="${p.src}" loading="lazy">`;
+  div.onclick=()=>openLb(p.src);
+  gal.appendChild(div);
+})
+
+const lb = document.getElementById('lb');
+const lbimg = document.getElementById('lbimg');
+function openLb(url){
+  lbimg.src=url;
+  lb.classList.add('show');
+}
+function closeLb(){
+  lb.classList.remove('show');
+}
+</script>
+</body>
+</html>
